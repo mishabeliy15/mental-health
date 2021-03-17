@@ -10,19 +10,25 @@ class UserAdmin(BaseUserAdmin):
     list_display = (
         *BaseUserAdmin.list_display,
         "user_type",
+        "last_test",
     )
 
     list_filter = (
         *BaseUserAdmin.list_filter,
         "user_type",
+        "last_test",
     )
 
     readonly_fields = (
         *BaseUserAdmin.readonly_fields,
         "user_type",
+        "last_test",
     )
 
-    fieldsets = (*BaseUserAdmin.fieldsets, (None, {"fields": ("user_type",)}))
+    fieldsets = (
+        *BaseUserAdmin.fieldsets,
+        (None, {"fields": ("user_type", "last_test")}),
+    )
 
 
 # Text to put at the end of each page's <title.>

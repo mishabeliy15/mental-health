@@ -56,6 +56,9 @@ INSTALLED_APPS = [
     "dbbackup",
     "django_cron",
     "users.apps.UsersConfig",
+    "tests_engine.apps.TestsEngineConfig",
+    "tests_history.apps.TestsHistoryConfig",
+    "sensors.apps.SensorsConfig",
 ]
 
 MIDDLEWARE = [
@@ -148,6 +151,7 @@ AUTH_USER_MODEL = "users.User"
 # Django REST Framework
 
 REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": env.int("PAGE_SIZE", 50),
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -205,9 +209,7 @@ if USE_AWS_FOR_STATIC:
 AWS_S3_STATIC_BUCKET_NAME = env.str(
     "AWS_S3_STATIC_BUCKET_NAME", default="mental-health"
 )
-AWS_S3_MEDIA_BUCKET_NAME = env.str(
-    "AWS_S3_MEDIA_BUCKET_NAME", default="mental-health"
-)
+AWS_S3_MEDIA_BUCKET_NAME = env.str("AWS_S3_MEDIA_BUCKET_NAME", default="mental-health")
 
 
 # BACKUPS
