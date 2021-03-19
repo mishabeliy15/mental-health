@@ -42,6 +42,9 @@ class PSTest(BaseModel):
         validators=(MinValueValidator(1),), verbose_name=_("Normal Mean Square Error")
     )
 
+    def __str__(self):
+        return self.name
+
     @staticmethod
     @authenticated_users
     def has_read_permission(request):
