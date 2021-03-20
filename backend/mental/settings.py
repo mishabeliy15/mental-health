@@ -220,3 +220,20 @@ DBBACKUP_STORAGE_OPTIONS = {"location": "/usr/src/app/backup/"}
 CRON_CLASSES = [
     "cron.backup.BackupJob",
 ]
+
+# Logging
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {"console": {"class": "logging.StreamHandler",},},
+    "root": {"handlers": ["console"], "level": "WARNING",},
+    "loggers": {
+        "django.db.backends": {
+            "handlers": ["console"],
+            "level": env.str("DJANGO_LOG_LEVEL", "DEBUG"),
+            "propagate": False,
+        },
+    },
+}

@@ -10,24 +10,24 @@ class UserAdmin(BaseUserAdmin):
     list_display = (
         *BaseUserAdmin.list_display,
         "user_type",
-        "last_test",
+        "last_step",
     )
 
     list_filter = (
         *BaseUserAdmin.list_filter,
         "user_type",
-        "last_test",
+        "last_step",
     )
 
     readonly_fields = (
         *BaseUserAdmin.readonly_fields,
         "user_type",
-        "last_test",
+        "last_step",
     )
 
     fieldsets = (
         *BaseUserAdmin.fieldsets,
-        (None, {"fields": ("user_type", "last_test")}),
+        (None, {"fields": ("user_type", "last_step")}),
     )
 
 

@@ -12,7 +12,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class PSTestSerializer(serializers.ModelSerializer):
-    owner = MyUserShortSerializer()
+    owner = MyUserShortSerializer(read_only=True)
 
     class Meta:
         model = PSTest

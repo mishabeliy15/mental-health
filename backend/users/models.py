@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext as _
 
-from tests_history.models import PSTestHistory
+from tests_history.models import PSTestStepHistory
 
 
 class User(AbstractUser):
@@ -17,12 +17,12 @@ class User(AbstractUser):
         verbose_name=_("User type"),
     )
 
-    last_test = models.ForeignKey(
-        PSTestHistory,
+    last_step = models.ForeignKey(
+        PSTestStepHistory,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        verbose_name=_("Last test"),
+        verbose_name=_("Last test step"),
     )
 
     def __str__(self) -> str:

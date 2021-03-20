@@ -21,7 +21,7 @@ class CategoryViewSet(ModelViewSet):
 
 
 class PSTestViewSet(ModelViewSet):
-    queryset = PSTest.objects.all()
+    queryset = PSTest.objects.select_related("owner")
     serializer_class = PSTestSerializer
     filter_backends = (BaseMyOwnFilterBackend, DjangoFilterBackend, SearchFilter)
     permission_classes = (DRYPermissions,)
@@ -45,6 +45,12 @@ class PSTestViewSet(ModelViewSet):
         if self.action == "retrieve":
             return PSTestDetailSerializer
         return super().get_serializer_class()
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if self.action == "retrieve":
+            queryset = queryset.prefetch_related("psteststep_set")
+        return queryset
 
     @action(detail=False, methods=("GET",))
     def my(self, request, *args, **kwargs):
