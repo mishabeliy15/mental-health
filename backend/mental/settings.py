@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     "tests_engine.apps.TestsEngineConfig",
     "tests_history.apps.TestsHistoryConfig",
     "sensors.apps.SensorsConfig",
+    "management.apps.ManagementConfig",
 ]
 
 MIDDLEWARE = [
