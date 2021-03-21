@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from commons.models import BaseModel
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -5,10 +7,19 @@ from django.utils.translation import gettext as _
 from tests_history.models import PSTestStepHistory
 
 
+def user_avatar_directory_path(instance: "User", filename: str) -> str:
+    test_media_dir = f"users/avatars/{uuid4()!s}/{filename}"
+    return test_media_dir
+
+
 class User(AbstractUser):
     class UserType(models.IntegerChoices):
         CLIENT = 1, _("CLIENT")
         PSYCHOLOGIST = 2, _("PSYCHOLOGIST")
+
+    class SexType(models.IntegerChoices):
+        MElA = 1, _("MElA")
+        FEMALE = 2, _("FEMALE")
 
     user_type = models.PositiveSmallIntegerField(
         choices=UserType.choices,
@@ -29,8 +40,23 @@ class User(AbstractUser):
         "self", symmetrical=True, verbose_name=_("Contacts"), db_index=True,
     )
 
+    date_of_birthday = models.DateField(_("Date Of Birthday"), null=True, blank=True)
+    sex = models.PositiveSmallIntegerField(
+        choices=SexType.choices, verbose_name=_("Sex"), null=True, blank=True
+    )
+    avatar = models.ImageField(
+        upload_to=user_avatar_directory_path,
+        verbose_name=_("Avatar"),
+        blank=True,
+        null=True,
+    )
+
     def __str__(self) -> str:
         return self.username
+
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
 
 
 class InviteToContact(BaseModel):
