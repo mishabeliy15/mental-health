@@ -1,9 +1,19 @@
+from django.db.models import Q, Value
+from django.db.models.functions import Concat
 from django.utils.translation import gettext as _
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import mixins
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
-from rest_framework.viewsets import ModelViewSet
-from users.models import InviteToContact
-from users.serializers import InviteToContactDetailSerializer, InviteToContactSerializer
+from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
+from users.models import InviteToContact, User
+from users.serializers import (
+    InviteToContactDetailSerializer,
+    InviteToContactSerializer,
+    MyUserListSerializer,
+    MyUserShortSerializer,
+)
 
 
 class InviteToContactViewSet(ModelViewSet):
@@ -42,3 +52,31 @@ class InviteToContactViewSet(ModelViewSet):
     def deny(self, request, pk=None):
         invite = self.get_object()
         invite.deny()
+
+
+class ExtraUsersViewSet(
+    mixins.RetrieveModelMixin, mixins.ListModelMixin, GenericViewSet
+):
+    queryset = User.objects.all()
+    serializer_class = MyUserListSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = (
+        "id",
+        "user_type",
+        "last_step",
+    )
+    search_fields = (
+        "username",
+        "first_name",
+        "last_name",
+        "full_name",
+    )
+    ordering_fields = search_fields
+
+    def get_queryset(self):
+        queryset = super(ExtraUsersViewSet, self).get_queryset()
+        queryset = queryset.annotate(
+            full_name=Concat("first_name", Value(" "), "last_name")
+        ).order_by("full_name")
+        queryset = queryset.filter(~Q(user_type=self.request.user.user_type))
+        return queryset

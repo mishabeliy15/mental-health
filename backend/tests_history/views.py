@@ -10,13 +10,14 @@ from tests_history.models import PSTestHistory, PSTestStepHistory
 from tests_history.serializers import (
     PSTestHistoryBaseSerializer,
     PSTestHistoryDetailSerializer,
+    PSTestHistoryListSerializer,
     PSTestStepHistoryBaseSerializer,
 )
 
 
 class PSTestHistoryViewSet(ModelViewSet):
     queryset = PSTestHistory.objects.select_related("test", "owner")
-    serializer_class = PSTestHistoryBaseSerializer
+    serializer_class = PSTestHistoryListSerializer
     filter_backends = (PSTestHistoryFilter, DjangoFilterBackend, SearchFilter)
     permission_classes = (DRYPermissions,)
     filterset_fields = (

@@ -7,4 +7,6 @@ class PSTestHistoryFilter(DRYPermissionFiltersBase):
     def filter_list_queryset(self, request, queryset, view):
         if request.user.user_type == request.user.UserType.CLIENT:
             queryset = queryset.filter(owner=request.user)
+        else:
+            queryset = queryset.filter(owner__in=request.user.contacts.all())
         return queryset

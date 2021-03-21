@@ -1,6 +1,6 @@
 from djoser.serializers import UserCreateSerializer
-from rest_framework.fields import ChoiceField
-from rest_framework.serializers import ModelSerializer
+from rest_framework.fields import ChoiceField, SerializerMethodField
+from rest_framework.serializers import CharField, ModelSerializer
 
 from .models import InviteToContact, User
 
@@ -26,6 +26,21 @@ class MyUserShortSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ("id", "username", "first_name", "last_name", "date_joined")
+
+
+class MyUserListSerializer(ModelSerializer):
+    full_name = CharField(read_only=True)
+
+    class Meta:
+        model = User
+        fields = (
+            "id",
+            "username",
+            "full_name",
+            "first_name",
+            "last_name",
+            "date_joined",
+        )
 
 
 class InviteToContactSerializer(ModelSerializer):
