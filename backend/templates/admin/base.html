@@ -5,5 +5,20 @@
     <a href="{% url 'management:backup' %}">{% trans 'Backup' %}</a> /
     <a href="{% url 'management:restore' %}">{% trans 'Restore' %}</a> /
     <a href="{% url 'management:update-cert' %}">{% trans 'Update Certificate' %}</a> /
+    <form action="{% url 'set_language' %}" method="post" style="display:inline">{% csrf_token %}
+    <input name="next" type="hidden" value="{{ redirect_to }}">
+    <select name="language" onchange="this.form.submit()">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        {% for language in languages %}
+            {% if language.code == "en" or language.code == "uk" %}
+                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                    {{ language.name_local }} ({{ language.code }})
+                </option>
+            {% endif %}
+        {% endfor %}
+    </select>/
+</form>
     {{ block.super }}
 {% endblock %}

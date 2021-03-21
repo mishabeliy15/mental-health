@@ -24,6 +24,7 @@ from drf_spectacular.views import (
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('admin/i18n/', include('django.conf.urls.i18n')),
     path("api/v0/", include("users.urls")),
     path("api/v0/", include("tests_engine.urls")),
     path("api/v0/", include("tests_history.urls")),
