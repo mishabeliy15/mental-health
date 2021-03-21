@@ -8,7 +8,6 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from tests_history.filters import PSTestHistoryFilter
 from tests_history.models import PSTestHistory, PSTestStepHistory
 from tests_history.serializers import (
-    PSTestHistoryBaseSerializer,
     PSTestHistoryDetailSerializer,
     PSTestHistoryListSerializer,
     PSTestStepHistoryBaseSerializer,
