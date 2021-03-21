@@ -30,12 +30,11 @@ class UserAdmin(BaseUserAdmin):
         "id",
         *BaseUserAdmin.readonly_fields,
         "user_type",
-        "last_step",
     )
 
     fieldsets = (
         *BaseUserAdmin.fieldsets,
-        (None, {"fields": ("user_type", "last_step")}),
+        (_("Other"), {"fields": ("user_type", "last_step", "contacts")}),
     )
 
 
