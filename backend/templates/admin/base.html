@@ -1,0 +1,9 @@
+{% extends "admin/base.html" %}
+{% load i18n static %}
+
+{% block userlinks %}
+    <a href="{% url 'management:backup' %}">{% trans 'Backup' %}</a> /
+    <a href="{% url 'management:restore' %}">{% trans 'Restore' %}</a> /
+    <a href="{% url 'management:update-cert' %}">{% trans 'Update Certificate' %}</a> /
+    {{ block.super }}
+{% endblock %}

@@ -17,12 +17,16 @@ class UserAdmin(BaseUserAdmin):
         "id",
         *BaseUserAdmin.list_display,
         "user_type",
+        "date_of_birthday",
+        "sex",
+        "avatar",
         "last_step",
     )
 
     list_filter = (
         *BaseUserAdmin.list_filter,
         "user_type",
+        "sex",
         "last_step",
     )
 
@@ -34,7 +38,19 @@ class UserAdmin(BaseUserAdmin):
 
     fieldsets = (
         *BaseUserAdmin.fieldsets,
-        (_("Other"), {"fields": ("user_type", "last_step", "contacts")}),
+        (
+            _("Other"),
+            {
+                "fields": (
+                    "user_type",
+                    "date_of_birthday",
+                    "sex",
+                    "avatar",
+                    "last_step",
+                    "contacts",
+                )
+            },
+        ),
     )
 
 
