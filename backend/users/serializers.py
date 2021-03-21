@@ -2,7 +2,7 @@ from djoser.serializers import UserCreateSerializer
 from rest_framework.fields import ChoiceField
 from rest_framework.serializers import ModelSerializer
 
-from .models import User
+from .models import InviteToContact, User
 
 
 class MyUserCreateSerializer(UserCreateSerializer):
@@ -26,3 +26,15 @@ class MyUserShortSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ("id", "username", "first_name", "last_name", "date_joined")
+
+
+class InviteToContactSerializer(ModelSerializer):
+    class Meta:
+        model = InviteToContact
+        fields = "__all__"
+        read_only_fields = ("from_user",)
+
+
+class InviteToContactDetailSerializer(InviteToContactSerializer):
+    from_user = MyUserShortSerializer()
+    to_user = MyUserShortSerializer()

@@ -2,12 +2,19 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext as _
 
-from .models import User
+from .models import InviteToContact, User
+
+
+class InviteToContactInline(admin.TabularInline):
+    model = InviteToContact
+    fk_name = "to_user"
 
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
+    inlines = (InviteToContactInline,)
     list_display = (
+        "id",
         *BaseUserAdmin.list_display,
         "user_type",
         "last_step",
@@ -20,6 +27,7 @@ class UserAdmin(BaseUserAdmin):
     )
 
     readonly_fields = (
+        "id",
         *BaseUserAdmin.readonly_fields,
         "user_type",
         "last_step",
@@ -28,6 +36,35 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         *BaseUserAdmin.fieldsets,
         (None, {"fields": ("user_type", "last_step")}),
+    )
+
+
+@admin.register(InviteToContact)
+class InviteToContactAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "status",
+        "from_user",
+        "to_user",
+        "updated",
+        "created",
+    )
+    readonly_fields = ("id", "created", "updated")
+    list_filter = (
+        "status",
+        "from_user",
+        "to_user",
+        "updated",
+        "created",
+    )
+    search_fields = (
+        "id",
+        "from_user__first_name",
+        "from_user__last_name",
+        "to_user__first_name",
+        "to_user__last_name",
+        "from_user__username",
+        "to_user__username",
     )
 
 

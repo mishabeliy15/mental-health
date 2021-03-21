@@ -1,7 +1,7 @@
+from commons.models import BaseModel
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext as _
-
 from tests_history.models import PSTestStepHistory
 
 
@@ -25,5 +25,49 @@ class User(AbstractUser):
         verbose_name=_("Last test step"),
     )
 
+    contacts = models.ManyToManyField(
+        "self", symmetrical=True, verbose_name=_("Contacts"), db_index=True,
+    )
+
     def __str__(self) -> str:
         return self.username
+
+
+class InviteToContact(BaseModel):
+    class Statuses(models.IntegerChoices):
+        PENDING = 1, _("PENDING")
+        ACCEPTED = 2, _("ACCEPTED")
+        DENIED = 3, _("DENIED")
+
+    status = models.PositiveSmallIntegerField(
+        choices=Statuses.choices,
+        default=Statuses.PENDING,
+        verbose_name=_("Status"),
+        db_index=True,
+    )
+    from_user = models.ForeignKey(
+        "users.User",
+        on_delete=models.CASCADE,
+        verbose_name=_("From"),
+        related_name="received_invites",
+        db_index=True,
+    )
+    to_user = models.ForeignKey(
+        "users.User",
+        on_delete=models.CASCADE,
+        verbose_name=_("To"),
+        related_name="sent_invites",
+    )
+
+    class Meta:
+        ordering = ("-created",)
+
+    def accept(self):
+        if self.to_user not in self.from_user.contacts.all():
+            self.from_user.contacts.add(self.to_user)
+        self.status = self.Statuses.ACCEPTED
+        self.save(update_fields=("status",))
+
+    def deny(self):
+        self.status = self.Statuses.DENIED
+        self.save(update_fields=("status",))
