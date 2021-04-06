@@ -30,11 +30,17 @@ import AddIcon from "@material-ui/icons/Add";
 import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 import EmojiTransportationIcon from "@material-ui/icons/EmojiTransportation";
 import DescriptionIcon from "@material-ui/icons/Description";
+import AddTestPage from "./test/AddTest.page";
 
 const userTypeNavigationListItem = {
   1: [
   ],
   2: [
+    {
+      name: "Add test",
+      icon: <AddIcon />,
+      url: "/tests/add",
+    },
   ],
 };
 
@@ -48,6 +54,9 @@ const userTypeSwitchRoutes = {
   2: (
     <Switch>
       <Route exact path="/">
+      </Route>
+      <Route exact path="/tests/add">
+        <AddTestPage />
       </Route>
     </Switch>
   ),

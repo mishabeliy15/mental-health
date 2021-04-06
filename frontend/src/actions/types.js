@@ -8,6 +8,7 @@ export const SET_MESSAGE = "SET_MESSAGE";
 export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
 
 export const CHANGE_LANGUAGE = "CHANGE_LANGUAGE";
+export const UPDATE_CATEGORIES_LIST = "UPDATE_CATEGORIES_LIST";
 
 export const IS_LOADING = "IS_LOADING";
 export const END_LOADING = "END_LOADING";

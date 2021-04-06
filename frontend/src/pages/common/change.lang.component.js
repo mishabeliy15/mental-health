@@ -54,9 +54,6 @@ class ChangeLanguageComponent extends Component {
           <MenuItem value="en-US">
             <Trans>English</Trans>
           </MenuItem>
-          <MenuItem value="ru-RU">
-            <Trans>Russian</Trans>
-          </MenuItem>
           <MenuItem value="uk-UA">
             <Trans>Ukrainian</Trans>
           </MenuItem>
