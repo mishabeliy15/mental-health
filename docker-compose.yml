@@ -47,6 +47,19 @@ services:
       - 443:443
     depends_on:
       - mental-health-backend
+      - mental-health-frontend
+    networks:
+      - mental-health_default
+
+  mental-health-frontend:
+    container_name: mental-health-frontend
+    build: ./frontend/
+    env_file:
+      - ./frontend/.env.docker
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/:/app/
     networks:
       - mental-health_default
 
