@@ -10,5 +10,8 @@ export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
 export const CHANGE_LANGUAGE = "CHANGE_LANGUAGE";
 export const UPDATE_CATEGORIES_LIST = "UPDATE_CATEGORIES_LIST";
 
+export const GET_TEST_DETAIL = "GET_TEST_DETAIL";
+export const EDIT_TEST = "EDIT_TEST";
+
 export const IS_LOADING = "IS_LOADING";
 export const END_LOADING = "END_LOADING";

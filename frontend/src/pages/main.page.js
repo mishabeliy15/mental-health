@@ -31,6 +31,7 @@ import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 import EmojiTransportationIcon from "@material-ui/icons/EmojiTransportation";
 import DescriptionIcon from "@material-ui/icons/Description";
 import AddTestPage from "./test/AddTest.page";
+import EditTestPage from "./test/EditTest.page";
 
 const userTypeNavigationListItem = {
   1: [
@@ -58,6 +59,7 @@ const userTypeSwitchRoutes = {
       <Route exact path="/tests/add">
         <AddTestPage />
       </Route>
+      <Route path="/tests/:id" component={EditTestPage} />
     </Switch>
   ),
 };

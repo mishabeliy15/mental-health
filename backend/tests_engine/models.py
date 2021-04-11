@@ -59,6 +59,11 @@ class PSTest(BaseModel):
     def has_create_permission(request):
         return request.user.user_type == request.user.UserType.PSYCHOLOGIST
 
+    @staticmethod
+    @authenticated_users
+    def has_write_permission(request):
+        return request.user.user_type == request.user.UserType.PSYCHOLOGIST
+
     def has_object_write_permission(self, request):
         return request.user == self.owner
 

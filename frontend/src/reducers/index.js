@@ -4,6 +4,7 @@ import { routerReducer } from "react-router-redux";
 import message from "./message";
 import common from "./common";
 import category from "./category";
+import test from "./test";
 
 export default combineReducers({
   routing: routerReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   message,
   common,
   category,
+  test,
 });

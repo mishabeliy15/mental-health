@@ -1,4 +1,4 @@
-import {CLEAR_MESSAGE, SET_MESSAGE, UPDATE_CATEGORIES_LIST} from "./types";
+import {CLEAR_MESSAGE, EDIT_TEST, GET_TEST_DETAIL, SET_MESSAGE, UPDATE_CATEGORIES_LIST} from "./types";
 import TestService from "./../services/test.service";
 
 
@@ -16,5 +16,17 @@ export const createTest = (data) => (dispatch) =>
 export const updateCategories = () => (dispatch) =>
   TestService.getCategories().then((categories) => {
     dispatch({type: UPDATE_CATEGORIES_LIST, payload: categories});
+    return Promise.resolve();
+  });
+
+export const getTestDetail = (id) => (dispatch) =>
+  TestService.getTestDetail(id).then((data) => {
+    dispatch({type: GET_TEST_DETAIL, payload: data});
+    return Promise.resolve();
+  });
+
+export const editTest = (data) => (dispatch) =>
+  TestService.patchTest(data).then((data) => {
+    dispatch({type: EDIT_TEST, payload: data});
     return Promise.resolve();
   });
