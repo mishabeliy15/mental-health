@@ -6,11 +6,11 @@ import {withStyles} from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Alert from "react-bootstrap/Alert";
-import {createTest, updateCategories} from "../../actions/test";
-import history from "../../helpers/history";
+import {editTest, getTestDetail, updateCategories} from "../../actions/test";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import {EDIT_TEST} from "../../actions/types";
 
 const useStyles = (theme) => ({
   root: {
@@ -23,36 +23,35 @@ const useStyles = (theme) => ({
   },
 });
 
-class AddTestPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "",
-      language: null,
-      category: "",
-      description: "",
-      normal_mse: ""
-    };
+class EditBaseTestComponent extends Component {
+  componentDidMount() {
     const {dispatch} = this.props;
+    const id = this.props.id;
     dispatch(updateCategories());
+    dispatch(getTestDetail(id))
   }
 
   handleInputChange = (event) => {
     const target = event.target;
-
-    this.setState({
-      [target.name]: target.value,
-    });
+    const {dispatch} = this.props;
+    dispatch({type: EDIT_TEST, payload: {[target.name]: target.value}})
   };
+
+  getTestData = () => {
+    const {test} = this.props;
+    const fields = new Set(["id", "name", "language", "category", "normal_mse", "description"]);
+    let data = {};
+    for (let key in test) {
+      if (fields.has(key)) data[key] = test[key];
+    }
+    return data;
+  }
 
   handleOnSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state);
+    console.log(this.props);
     const {dispatch} = this.props;
-    dispatch(createTest(this.state))
-      .then(
-        (test) => history.push(`/tests/${test.id}/edit/`)
-      );
+    dispatch(editTest(this.getTestData()));
   };
 
   render() {
@@ -69,7 +68,7 @@ class AddTestPage extends Component {
                 required
                 id="test-name"
                 label={t("Name")}
-                value={this.state.name}
+                value={this.props.test.name}
                 onChange={this.handleInputChange}
                 name="name"
                 fullWidth={true}
@@ -83,7 +82,7 @@ class AddTestPage extends Component {
                 id="description-name"
                 label={t("Description")}
                 multiline
-                value={this.state.description}
+                value={this.props.test.description}
                 onChange={this.handleInputChange}
                 name="description"
                 fullWidth={true}
@@ -94,7 +93,7 @@ class AddTestPage extends Component {
               />
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}>
               <InputLabel id="language-select-label">
                 <Trans>Language</Trans>
               </InputLabel>
@@ -103,7 +102,7 @@ class AddTestPage extends Component {
                 required
                 id="language"
                 name="language"
-                value={this.state.language}
+                value={this.props.test.language}
                 onChange={this.handleInputChange}
               >
                 <MenuItem value={"EN"}>
@@ -115,7 +114,7 @@ class AddTestPage extends Component {
               </Select>
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}>
               <InputLabel id="category-select-label">
                 <Trans>Category</Trans>
               </InputLabel>
@@ -124,7 +123,7 @@ class AddTestPage extends Component {
                 required
                 id="category"
                 name="category"
-                value={this.state.category}
+                value={this.props.test.category}
                 onChange={this.handleInputChange}
               >
                 {this.props.categories.map((category) =>
@@ -135,12 +134,12 @@ class AddTestPage extends Component {
               </Select>
             </Grid>
 
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={12} sm={4}>
               <TextField
                 required
                 id="normal-mse"
                 label={t("Normal MSE")}
-                value={this.state.normal_mse}
+                value={this.props.test.normal_mse}
                 onChange={this.handleInputChange}
                 type="number"
                 InputProps={{ inputProps: { min: 1 } }}
@@ -167,7 +166,7 @@ class AddTestPage extends Component {
                 color="primary"
                 className={classes.submit}
               >
-                <Trans>Add</Trans> <Trans>test</Trans>
+                <Trans>Save</Trans>
               </Button>
             </Grid>
           </Grid>
@@ -183,9 +182,10 @@ const mapStateToProps = (state) => {
     message,
     categories: state.category,
     lang: state.common.lang,
+    test: state.test
   };
 };
 
 export default connect(mapStateToProps)(
-  withStyles(useStyles)(withNamespaces()(AddTestPage))
+  withStyles(useStyles)(withNamespaces()(EditBaseTestComponent))
 );

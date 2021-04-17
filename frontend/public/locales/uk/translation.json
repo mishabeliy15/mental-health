@@ -23,5 +23,19 @@
   "Date of birthday": "Дата народження",
   "Client": "Клієнт",
   "Psychologist": "Психолог",
-  "Admin panel": "Адміністрування"
+  "Admin panel": "Адміністрування",
+  "Name": "Назва",
+  "Description": "Опыс",
+  "Category": "Категорія",
+  "Add": "додати",
+  "test": "тест",
+  "Save": "Зберегти",
+  "step": "крок",
+  "Add test step": "Додати крок тесту",
+  "Media file": "Медіа файл",
+  "Media type": "Тип файлу",
+  "Duration": "Тривалість",
+  "Min pulse": "Мін. пульс",
+  "Max pulse": "Макс. пульс",
+  "Help text": "Допоміжний текст"
 }
