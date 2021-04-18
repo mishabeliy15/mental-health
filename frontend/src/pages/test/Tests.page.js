@@ -118,6 +118,7 @@ class TestsPage extends Component {
           pageSize={5}
           columns={this.getColumns()}
           rows={this.state.tests}
+          loading={!this.state.tests.length}
           onRowClick={this.onRowClick}
         />
       </div>

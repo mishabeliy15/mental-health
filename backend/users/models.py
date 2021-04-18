@@ -37,7 +37,7 @@ class User(AbstractUser):
     )
 
     contacts = models.ManyToManyField(
-        "self", symmetrical=True, verbose_name=_("Contacts"), db_index=True,
+        "self", symmetrical=True, verbose_name=_("Contacts"), db_index=True, blank=True
     )
 
     date_of_birthday = models.DateField(_("Date Of Birthday"), null=True, blank=True)
