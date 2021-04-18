@@ -25,13 +25,11 @@ import { Link, Route } from "react-router-dom";
 import { default as HrefLink } from "@material-ui/core/Link";
 import history from "../helpers/history";
 import useStyles from "./main.page.style";
-import BuildIcon from "@material-ui/icons/Build";
 import AddIcon from "@material-ui/icons/Add";
-import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
-import EmojiTransportationIcon from "@material-ui/icons/EmojiTransportation";
-import DescriptionIcon from "@material-ui/icons/Description";
+import ListIcon from '@material-ui/icons/List';
 import AddTestPage from "./test/AddTest.page";
 import EditTestPage from "./test/EditTest.page";
+import MyTestPage from "./test/MyTests.page";
 
 const userTypeNavigationListItem = {
   1: [
@@ -41,6 +39,11 @@ const userTypeNavigationListItem = {
       name: "Add test",
       icon: <AddIcon />,
       url: "/tests/add",
+    },
+    {
+      name: "My tests",
+      icon: <ListIcon />,
+      url: "/tests/my",
     },
   ],
 };
@@ -55,10 +58,12 @@ const userTypeSwitchRoutes = {
   2: (
     <Switch>
       <Route exact path="/">
+        <Redirect to="/tests/my"/>
       </Route>
       <Route exact path="/tests/add">
         <AddTestPage />
       </Route>
+      <Route path="/tests/my" component={MyTestPage} />
       <Route path="/tests/:id" component={EditTestPage} />
     </Switch>
   ),
