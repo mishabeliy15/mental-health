@@ -19,7 +19,7 @@ const useStyles = (theme) => ({
   },
 });
 
-class MyTestPage extends Component {
+class TestsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {tests: []};
@@ -28,7 +28,7 @@ class MyTestPage extends Component {
     const {dispatch} = this.props;
     dispatch(updateCategories())
       .then(
-        TestService.myTest()
+        TestService.getTests()
           .then((tests) => this.setState({tests}))
       );
   }
@@ -42,6 +42,12 @@ class MyTestPage extends Component {
       cats[category.id] = category[`name_${catLang}`];
     });
     return cats;
+  }
+
+  calculateAge = (birthday) => {
+    const ageDifMs = Date.now() - birthday.getTime();
+    const ageDate = new Date(ageDifMs);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
 
   getColumns = () => {
@@ -66,22 +72,35 @@ class MyTestPage extends Component {
       { field: 'description', headerName: t('Description'), width: 200},
       {
         field: 'normal_mse',
-        headerName: t('Normal MSE'),
+        headerName: t('MSE'),
         type: 'number',
-        width: 150,
+        width: 70,
+      },
+      {
+        field: 'owner',
+        headerName: t('Owner'),
+        width: 170,
+        valueGetter: (params) => `${params.row.owner.first_name} ${params.row.owner.last_name}`
+      },
+      {
+        field: 'age',
+        headerName: t('Age'),
+        type: 'number',
+        width: 70,
+        valueGetter: (params) => this.calculateAge(new Date(params.row.owner.date_of_birthday))
       },
       {
         field: 'created',
         headerName: t('Created'),
         type: 'date',
-        width: 150,
+        width: 130,
         valueGetter: (params) => new Date(params.row.created).toLocaleDateString()
       },
       {
         field: 'updated',
         headerName: t('Updated'),
         type: 'date',
-        width: 150,
+        width: 130,
         valueGetter: (params) => new Date(params.row.updated).toLocaleDateString()
       },
     ];
@@ -114,5 +133,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(
-  withStyles(useStyles)(withNamespaces()(MyTestPage))
+  withStyles(useStyles)(withNamespaces()(TestsPage))
 );

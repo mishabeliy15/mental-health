@@ -13,6 +13,10 @@ class TestService {
     return axios.get(this.CATEGORIES_API_URL).then((response) => response.data.results);
   }
 
+  getTests() {
+    return axios.get(this.BASE_API_URL).then((response) => response.data.results);
+  }
+
   myTest() {
     return axios.get(this.MY_TEST_API_URL).then((response) => response.data.results);
   }

@@ -30,9 +30,15 @@ import ListIcon from '@material-ui/icons/List';
 import AddTestPage from "./test/AddTest.page";
 import EditTestPage from "./test/EditTest.page";
 import MyTestPage from "./test/MyTests.page";
+import TestsPage from "./test/Tests.page";
 
 const userTypeNavigationListItem = {
   1: [
+    {
+      name: "Tests",
+      icon: <ListIcon />,
+      url: "/tests",
+    },
   ],
   2: [
     {
@@ -52,7 +58,9 @@ const userTypeSwitchRoutes = {
   1: (
     <Switch>
       <Route exact path="/">
+        <Redirect to="/tests"/>
       </Route>
+      <Route exact path="/tests" component={TestsPage} />
     </Switch>
   ),
   2: (
@@ -63,7 +71,7 @@ const userTypeSwitchRoutes = {
       <Route exact path="/tests/add">
         <AddTestPage />
       </Route>
-      <Route path="/tests/my" component={MyTestPage} />
+      <Route exact path="/tests/my" component={MyTestPage} />
       <Route path="/tests/:id" component={EditTestPage} />
     </Switch>
   ),
