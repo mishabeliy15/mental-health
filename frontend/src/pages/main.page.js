@@ -32,6 +32,7 @@ import EditTestPage from "./test/EditTest.page";
 import MyTestPage from "./test/MyTests.page";
 import TestsPage from "./test/Tests.page";
 import TestDetailPage from "./test/TestDetail.page";
+import ProcessTestPage from "./test/ProcessTest.page";
 
 const userTypeNavigationListItem = {
   1: [
@@ -62,7 +63,8 @@ const userTypeSwitchRoutes = {
         <Redirect to="/tests"/>
       </Route>
       <Route exact path="/tests" component={TestsPage} />
-      <Route path="/tests/:id" component={TestDetailPage} />
+      <Route exact path="/tests/:id/process" component={ProcessTestPage} />
+      <Route exact path="/tests/:id" component={TestDetailPage} />
     </Switch>
   ),
   2: (

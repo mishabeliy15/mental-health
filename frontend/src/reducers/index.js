@@ -5,6 +5,7 @@ import message from "./message";
 import common from "./common";
 import category from "./category";
 import test from "./test";
+import processTest from "./processTest";
 
 export default combineReducers({
   routing: routerReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   common,
   category,
   test,
+  processTest,
 });

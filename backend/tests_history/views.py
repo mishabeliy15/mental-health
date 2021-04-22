@@ -11,6 +11,7 @@ from tests_history.serializers import (
     PSTestHistoryDetailSerializer,
     PSTestHistoryListSerializer,
     PSTestStepHistoryBaseSerializer,
+    PSTestHistoryBaseSerializer,
 )
 
 
@@ -46,6 +47,8 @@ class PSTestHistoryViewSet(ModelViewSet):
     def get_serializer_class(self):
         if self.action == "retrieve":
             return PSTestHistoryDetailSerializer
+        elif self.action == "create":
+            return PSTestHistoryBaseSerializer
         return super().get_serializer_class()
 
     def get_queryset(self):

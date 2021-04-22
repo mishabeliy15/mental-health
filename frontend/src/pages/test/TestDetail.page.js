@@ -6,6 +6,8 @@ import {getTestDetail, updateCategories} from "../../actions/test";
 import Grid from "@material-ui/core/Grid";
 import {Button} from "@material-ui/core";
 import CreateIcon from '@material-ui/icons/Create';
+import processTest from "../../reducers/processTest";
+import history from "../../helpers/history";
 
 
 const useStyles = (theme) => ({
@@ -53,8 +55,12 @@ class TestDetailPage extends Component {
     return res;
   }
 
+  getSex = () => this.props.test.owner.sex === 1 ? "Male" : "Female";
+
+  handleProcessTest = (testId) => history.push(`/tests/${testId}/process`);
+
   render() {
-    const {classes} = this.props;
+    const {classes, t} = this.props;
     const cats = this.getCategories();
 
     return (
@@ -65,7 +71,7 @@ class TestDetailPage extends Component {
             <h3>{this.props.test.owner.first_name} {this.props.test.owner.last_name}</h3>
             <h3>({this.props.test.owner.username})</h3>
             <p><Trans>Birthday</Trans>: {new Date(this.props.test.owner.date_of_birthday).toLocaleDateString()}</p>
-            <p><Trans>Sex</Trans>: {new Date(this.props.test.owner.date_of_birthday).toLocaleDateString()}</p>
+            <p><Trans>Sex</Trans>: {t(this.getSex())}</p>
           </Grid>
           <Grid item xs={6}>
             <h1>{this.props.test.name}</h1>
@@ -78,7 +84,7 @@ class TestDetailPage extends Component {
               size="large"
               className={classes.button}
               startIcon={<CreateIcon/>}
-              // onClick={() => this.handleDeleteTestStep(step.id)}
+              onClick={() => this.handleProcessTest(this.props.test.id)}
             >
               <Trans>Start test</Trans>
             </Button>
@@ -95,7 +101,8 @@ const mapStateToProps = (state) => {
     message,
     categories: state.category,
     lang: state.common.lang,
-    test: state.test
+    test: state.test,
+    process: state.processTest,
   };
 };
 
