@@ -4,6 +4,7 @@ from rest_framework.exceptions import ValidationError
 from sensors.serializers import PulseRecordSerializer
 from tests_engine.serializers import PSTestSerializer, PSTestStepSerializer
 from tests_history.models import PSTestHistory, PSTestStepHistory
+from users.serializers import MyUserShortSerializer
 
 
 class PSTestHistoryBaseSerializer(serializers.ModelSerializer):
@@ -43,6 +44,7 @@ class PSTestHistoryDetailSerializer(PSTestHistoryListSerializer):
     step_history = PSTestStepHistoryDetailSerializer(
         many=True, source="psteststephistory_set", read_only=True
     )
+    owner = MyUserShortSerializer(read_only=True)
 
     def get_mse(self, obj: PSTestHistory) -> float:
         return obj.get_mse()

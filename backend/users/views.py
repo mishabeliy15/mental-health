@@ -1,4 +1,4 @@
-from django.db.models import Q, Value
+from django.db.models import Q, Value, CharField
 from django.db.models.functions import Concat
 from django.utils.translation import gettext as _
 from django_filters.rest_framework import DjangoFilterBackend
@@ -6,6 +6,7 @@ from rest_framework import mixins
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from users.models import InviteToContact, User
 from users.serializers import (
@@ -41,17 +42,26 @@ class InviteToContactViewSet(ModelViewSet):
         contacts = self.request.user.contacts.all()
         if to_user in contacts:
             raise ValidationError(detail=_("User is already in your contacts"))
+        invite_exist = InviteToContact.objects.filter(
+            from_user=self.request.user,
+            to_user=to_user,
+            status=InviteToContact.Statuses.PENDING
+        )
+        if invite_exist.exists():
+            raise ValidationError(detail=_("Invite is already exists"))
         serializer.save(from_user=self.request.user)
 
     @action(methods=("POST",), detail=True)
     def accept(self, request, pk=None):
         invite = self.get_object()
         invite.accept()
+        return Response(InviteToContactDetailSerializer(invite).data)
 
     @action(methods=("POST",), detail=True)
     def deny(self, request, pk=None):
         invite = self.get_object()
         invite.deny()
+        return Response(InviteToContactDetailSerializer(invite).data)
 
 
 class ExtraUsersViewSet(

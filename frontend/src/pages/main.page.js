@@ -36,6 +36,10 @@ import ProcessTestPage from "./test/ProcessTest.page";
 import MyPassedTestPage from "./history/MyPassedTests.page";
 import ArchiveIcon from '@material-ui/icons/Archive';
 import TestHistoryDetailPage from "./history/TestHistoryDetail.page";
+import SearchUserPage from "./invites/SearchUser.page";
+import SearchIcon from '@material-ui/icons/Search';
+import MyInvitesPage from "./invites/MyInvites.page";
+import MailIcon from '@material-ui/icons/Mail';
 
 
 const userTypeNavigationListItem = {
@@ -50,6 +54,16 @@ const userTypeNavigationListItem = {
       icon: <ArchiveIcon />,
       url: "/tests/my",
     },
+    {
+      name: "Search user",
+      icon: <SearchIcon />,
+      url: "/search-user",
+    },
+    {
+      name: "Invites",
+      icon: <MailIcon />,
+      url: "/invites",
+    },
   ],
   2: [
     {
@@ -61,6 +75,16 @@ const userTypeNavigationListItem = {
       name: "My tests",
       icon: <ListIcon />,
       url: "/tests/my",
+    },
+    {
+      name: "Search user",
+      icon: <SearchIcon />,
+      url: "/search-user",
+    },
+    {
+      name: "Invites",
+      icon: <MailIcon />,
+      url: "/invites",
     },
   ],
 };
@@ -76,6 +100,8 @@ const userTypeSwitchRoutes = {
       <Route exact path="/tests/:id/process" component={ProcessTestPage} />
       <Route exact path="/tests/:id" component={TestDetailPage} />
       <Route exact path="/history/:id" component={TestHistoryDetailPage} />
+      <Route exact path="/search-user" component={SearchUserPage} />
+      <Route exact path="/invites" component={MyInvitesPage}/>
     </Switch>
   ),
   2: (
@@ -88,6 +114,9 @@ const userTypeSwitchRoutes = {
       </Route>
       <Route exact path="/tests/my" component={MyTestPage} />
       <Route path="/tests/:id" component={EditTestPage} />
+      <Route exact path="/history/:id" component={TestHistoryDetailPage} />
+      <Route exact path="/search-user" component={SearchUserPage} />
+      <Route exact path="/invites" component={MyInvitesPage}/>
     </Switch>
   ),
 };
