@@ -12,6 +12,14 @@ class TestHistoryService {
 
   addStepHistory = (test_history, step) =>
     axios.post(this.STEP_BASE_API_URL, {test_history, step}).then((response) => response.data);
+
+  getMyTestHistory = () =>
+    axios.get(this.BASE_API_URL).then((response) => response.data.results);
+
+  getUserTestHistory = (ownerId) =>
+    axios.get(this.BASE_API_URL, {params: {owner: ownerId}})
+      .then((response) => response.data.results);
+
 }
 
 

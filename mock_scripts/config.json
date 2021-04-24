@@ -1,0 +1,7 @@
+{
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjE5MTUwMTA1LCJqdGkiOiJjMmVjOTYxNTVkMTk0YjdkOTgzYjRhNjgxYzNhYTQ0MSIsInVzZXJfaWQiOjJ9.bnPLpZXMrtIu4dipWQsolnx-FRRK0G5SD7zuLfC0o1o",
+  "base": 60,
+  "min": 60,
+  "max": 150,
+  "url": "http://localhost/api/v0/pulse_record/"
+}

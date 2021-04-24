@@ -39,5 +39,15 @@
   "Max pulse": "Макс. пульс",
   "Help text": "Допоміжний текст",
   "Created": "Створено",
-  "Updated": "Оновленно"
+  "Updated": "Оновленно",
+  "Tests": "Тести",
+  "Owner": "Власник",
+  "Age": "Вік",
+  "My passed tests": "Мої здані тести",
+  "Status": "Статус",
+  "Started": "Початок",
+  "Ended": "Кінець",
+  "IN PROGRESS": "В ПРОГРЕСІ",
+  "COMPLETED": "ЗАКІНЧЕН",
+  "NOT COMPLETED": "НЕ ЗАКІНЧЕН"
 }

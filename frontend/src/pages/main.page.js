@@ -33,6 +33,8 @@ import MyTestPage from "./test/MyTests.page";
 import TestsPage from "./test/Tests.page";
 import TestDetailPage from "./test/TestDetail.page";
 import ProcessTestPage from "./test/ProcessTest.page";
+import MyPassedTestPage from "./history/MyPassedTests.page";
+import ArchiveIcon from '@material-ui/icons/Archive';
 
 const userTypeNavigationListItem = {
   1: [
@@ -40,6 +42,11 @@ const userTypeNavigationListItem = {
       name: "Tests",
       icon: <ListIcon />,
       url: "/tests",
+    },
+    {
+      name: "My passed tests",
+      icon: <ArchiveIcon />,
+      url: "/tests/my",
     },
   ],
   2: [
@@ -63,6 +70,7 @@ const userTypeSwitchRoutes = {
         <Redirect to="/tests"/>
       </Route>
       <Route exact path="/tests" component={TestsPage} />
+      <Route exact path="/tests/my" component={MyPassedTestPage}/>
       <Route exact path="/tests/:id/process" component={ProcessTestPage} />
       <Route exact path="/tests/:id" component={TestDetailPage} />
     </Switch>

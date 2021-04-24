@@ -2,10 +2,14 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Trans, withNamespaces} from "react-i18next";
 import {withStyles} from "@material-ui/core/styles";
-import {updateCategories} from "../../actions/test";
+import {getTestDetail, updateCategories} from "../../actions/test";
+import processTest from "../../reducers/processTest";
+import TestHistoryService from "./../../services/testHistory.service";
+import {createTestHistory} from "../../actions/history";
 import history from "../../helpers/history";
-import { DataGrid } from '@material-ui/data-grid';
+import {INCREASE_SECONDS, INCREASE_STEP_I} from "../../actions/types";
 import TestService from "../../services/test.service";
+import {DataGrid} from "@material-ui/data-grid";
 
 
 const useStyles = (theme) => ({
@@ -19,17 +23,17 @@ const useStyles = (theme) => ({
   },
 });
 
-class TestsPage extends Component {
+class MyPassedTestPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {tests: []};
+    this.state = {"tests": []};
   }
+
   componentDidMount() {
     const {dispatch} = this.props;
     dispatch(updateCategories())
       .then(
-        TestService.getTests()
-          .then((tests) => this.setState({tests}))
+        TestHistoryService.getMyTestHistory().then((tests) => this.setState({tests}))
       );
   }
 
@@ -53,7 +57,7 @@ class TestsPage extends Component {
   getColumns = () => {
     const { t } = this.props;
     const cats = this.getCategories();
-
+    const statuses = {1: t("IN PROGRESS"), 2: t("COMPLETED"), 3: t("NOT COMPLETED")};
     const columns = [
       {
         field: 'id',
@@ -61,67 +65,69 @@ class TestsPage extends Component {
         width: 70,
         type: "number",
       },
-      { field: 'name', headerName: t('Name'), width: 150 },
-      { field: 'language', headerName: t('Language'), width: 70 },
+      {
+        field: 'status',
+        headerName: t('Status'),
+        width: 130,
+        valueGetter: (params) => statuses[params.row.status]
+      },
+      { field: 'name', headerName: t('Name'), width: 150, valueGetter: (params) => params.row.test.name },
+      { field: 'language', headerName: t('Language'), width: 70, valueGetter: (params) => params.row.test.language },
       {
         field: 'category',
         headerName: t('Category'),
         width: 150,
-        valueGetter: (params) => cats[params.row.category]
+        valueGetter: (params) => cats[params.row.test.category]
       },
-      { field: 'description', headerName: t('Description'), width: 200},
+      { field: 'description', headerName: t('Description'), width: 200, valueGetter: (params) => params.row.test.description},
       {
         field: 'normal_mse',
         headerName: t('MSE'),
         type: 'number',
         width: 70,
+        valueGetter: (params) => params.row.test.normal_mse
       },
       {
         field: 'owner',
         headerName: t('Owner'),
         width: 170,
-        valueGetter: (params) => `${params.row.owner.first_name} ${params.row.owner.last_name}`
+        valueGetter: (params) => `${params.row.test.owner.first_name} ${params.row.test.owner.last_name}`
       },
       {
         field: 'age',
         headerName: t('Age'),
         type: 'number',
         width: 70,
-        valueGetter: (params) => this.calculateAge(new Date(params.row.owner.date_of_birthday))
+        valueGetter: (params) => this.calculateAge(new Date(params.row.test.owner.date_of_birthday))
       },
       {
         field: 'created',
-        headerName: t('Created'),
+        headerName: t('Started'),
         type: 'date',
-        width: 130,
-        valueGetter: (params) => new Date(params.row.created).toLocaleDateString()
+        width: 190,
+        valueGetter: (params) => new Date(params.row.created).toLocaleString()
       },
       {
         field: 'updated',
-        headerName: t('Updated'),
+        headerName: t('Ended'),
         type: 'date',
-        width: 130,
-        valueGetter: (params) => new Date(params.row.updated).toLocaleDateString()
+        width: 190,
+        valueGetter: (params) => new Date(params.row.updated).toLocaleString()
       },
     ];
     return columns;
   }
 
-  onRowClick = (event, rowData) => {
-    history.push(`/tests/${event.row.id}`);
-  }
-
   render() {
     return (
       <div>
-        <h1><Trans>Tests</Trans></h1>
+        <h1><Trans>My passed tests</Trans></h1>
         <div style={{ height: 500, width: '100%' }}>
           <DataGrid
             pageSize={5}
             columns={this.getColumns()}
             rows={this.state.tests}
             loading={!this.state.tests.length}
-            onRowClick={this.onRowClick}
           />
         </div>
       </div>
@@ -137,5 +143,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(
-  withStyles(useStyles)(withNamespaces()(TestsPage))
+  withStyles(useStyles)(withNamespaces()(MyPassedTestPage))
 );
