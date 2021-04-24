@@ -40,6 +40,8 @@ import SearchUserPage from "./invites/SearchUser.page";
 import SearchIcon from '@material-ui/icons/Search';
 import MyInvitesPage from "./invites/MyInvites.page";
 import MailIcon from '@material-ui/icons/Mail';
+import MyClientsTestPage from "./history/MyClientsTestPassed";
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 
 
 const userTypeNavigationListItem = {
@@ -86,6 +88,11 @@ const userTypeNavigationListItem = {
       icon: <MailIcon />,
       url: "/invites",
     },
+    {
+      name: "Clients",
+      icon: <AssignmentIndIcon />,
+      url: "/clients/tests",
+    },
   ],
 };
 
@@ -117,6 +124,7 @@ const userTypeSwitchRoutes = {
       <Route exact path="/history/:id" component={TestHistoryDetailPage} />
       <Route exact path="/search-user" component={SearchUserPage} />
       <Route exact path="/invites" component={MyInvitesPage}/>
+      <Route exact path="/clients/tests" component={MyClientsTestPage}/>
     </Switch>
   ),
 };

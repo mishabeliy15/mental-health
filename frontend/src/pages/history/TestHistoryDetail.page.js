@@ -208,6 +208,7 @@ class TestHistoryDetailPage extends Component {
     return (
       <div className={classes.root}>
         <h1 align="center">{this.state.detail.test.name}</h1>
+        <h2 align="center">{this.state.detail.owner.first_name} {this.state.detail.owner.first_name}</h2>
         {this.getGeneralMSE()}
         {this.getGeneralPlot()}
           {this.state.detail.step_history.map((step_history) => <Grid container spacing={3}>

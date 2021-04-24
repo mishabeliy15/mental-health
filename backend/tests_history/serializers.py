@@ -15,6 +15,7 @@ class PSTestHistoryBaseSerializer(serializers.ModelSerializer):
 
 
 class PSTestHistoryListSerializer(PSTestHistoryBaseSerializer):
+    owner = MyUserShortSerializer(read_only=True)
     test = PSTestSerializer(read_only=True)
 
 
