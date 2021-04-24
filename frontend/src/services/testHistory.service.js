@@ -20,6 +20,9 @@ class TestHistoryService {
     axios.get(this.BASE_API_URL, {params: {owner: ownerId}})
       .then((response) => response.data.results);
 
+  getDetailHistory = (id) =>
+    axios.get(`${this.BASE_API_URL}${id}/`).then((response) => response.data);
+
 }
 
 

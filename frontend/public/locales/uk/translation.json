@@ -49,5 +49,9 @@
   "Ended": "Кінець",
   "IN PROGRESS": "В ПРОГРЕСІ",
   "COMPLETED": "ЗАКІНЧЕН",
-  "NOT COMPLETED": "НЕ ЗАКІНЧЕН"
+  "NOT COMPLETED": "НЕ ЗАКІНЧЕН",
+  "Pulse": "Пульс",
+  "General Pulse Plot": "Загальний пульс на протязі всього тесту",
+  "Pulse Plot": "Пульс на протязі тесту",
+  "Time (s.)": "Час (с.)"
 }

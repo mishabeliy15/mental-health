@@ -35,6 +35,8 @@ import TestDetailPage from "./test/TestDetail.page";
 import ProcessTestPage from "./test/ProcessTest.page";
 import MyPassedTestPage from "./history/MyPassedTests.page";
 import ArchiveIcon from '@material-ui/icons/Archive';
+import TestHistoryDetailPage from "./history/TestHistoryDetail.page";
+
 
 const userTypeNavigationListItem = {
   1: [
@@ -73,6 +75,7 @@ const userTypeSwitchRoutes = {
       <Route exact path="/tests/my" component={MyPassedTestPage}/>
       <Route exact path="/tests/:id/process" component={ProcessTestPage} />
       <Route exact path="/tests/:id" component={TestDetailPage} />
+      <Route exact path="/history/:id" component={TestHistoryDetailPage} />
     </Switch>
   ),
   2: (

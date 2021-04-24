@@ -2,14 +2,10 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Trans, withNamespaces} from "react-i18next";
 import {withStyles} from "@material-ui/core/styles";
-import {getTestDetail, updateCategories} from "../../actions/test";
-import processTest from "../../reducers/processTest";
+import {updateCategories} from "../../actions/test";
 import TestHistoryService from "./../../services/testHistory.service";
-import {createTestHistory} from "../../actions/history";
-import history from "../../helpers/history";
-import {INCREASE_SECONDS, INCREASE_STEP_I} from "../../actions/types";
-import TestService from "../../services/test.service";
 import {DataGrid} from "@material-ui/data-grid";
+import history from "../../helpers/history";
 
 
 const useStyles = (theme) => ({
@@ -118,6 +114,10 @@ class MyPassedTestPage extends Component {
     return columns;
   }
 
+  onRowClick = (event, rowData) => {
+    history.push(`/history/${event.row.id}`);
+  }
+
   render() {
     return (
       <div>
@@ -128,6 +128,7 @@ class MyPassedTestPage extends Component {
             columns={this.getColumns()}
             rows={this.state.tests}
             loading={!this.state.tests.length}
+            onRowClick={this.onRowClick}
           />
         </div>
       </div>
